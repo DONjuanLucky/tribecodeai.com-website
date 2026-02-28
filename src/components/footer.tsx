@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Phone, Mail, MapPin, Github, Linkedin, Twitter, Instagram, Facebook } from "lucide-react"
 
 const footerLinks = {

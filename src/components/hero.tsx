@@ -109,40 +109,22 @@ export function Hero() {
           transition={{ duration: 0.8 }}
           className="mb-12"
         >
-          <div className="inline-flex items-center gap-4 mb-8">
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={loaded ? { scale: 1, rotate: 0 } : {}}
-              transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-              className="relative w-20 h-20"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-2xl rotate-12 opacity-50 blur-lg" />
-              <div className="relative w-full h-full bg-gradient-to-br from-sky-500 to-cyan-500 rounded-2xl flex items-center justify-center glow-primary">
-                <Cpu className="w-10 h-10 text-white" />
-              </div>
-            </motion.div>
-            
-            <div className="text-left">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={loaded ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex items-baseline gap-1"
-              >
-                <span className="text-4xl md:text-5xl font-black text-white tracking-tight">tribe</span>
-                <span className="text-4xl md:text-5xl font-black bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">code</span>
-                <span className="text-4xl md:text-5xl font-black text-sky-400 tracking-tight">AI</span>
-              </motion.div>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={loaded ? { opacity: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-sm md:text-base text-sky-400/80 font-mono tracking-widest uppercase"
-              >
-                Intelligent Solutions
-              </motion.p>
-            </div>
-          </div>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={loaded ? { scale: 1, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-block max-w-3xl"
+          >
+            <img
+              src="/images/tribecode-logo.svg"
+              alt="TribeCode AI - Intelligent Solutions"
+              className="w-full h-auto max-w-2xl mx-auto"
+              width="800"
+              height="200"
+              priority
+            />
+          </motion.div>
+        </motion.div>
         </motion.div>
 
         {/* H1 - Main Headline */}
