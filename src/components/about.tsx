@@ -5,7 +5,7 @@ import { Target, Eye, Heart } from "lucide-react"
 
 export function About() {
   return (
-    <section id="about" className="py-32 relative">
+    <section id="about" className="py-32 relative" aria-labelledby="about-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -15,7 +15,7 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+            <h2 id="about-heading" className="text-4xl md:text-5xl font-black text-white mb-6">
               Not a Software Company. A{" "}
               <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
                 Results
@@ -29,6 +29,7 @@ export function About() {
             <p className="text-lg text-slate-400 mb-8 leading-relaxed">
               We build intelligent digital workers — AI voice agents, automation systems, and 
               conversion-focused web experiences — that handle the tasks stealing your time and revenue.
+              Based in Santa Cruz, we serve service businesses across California and beyond.
             </p>
 
             <div className="space-y-6">

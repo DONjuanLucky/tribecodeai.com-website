@@ -32,7 +32,7 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="py-32 relative">
+    <section id="process" className="py-32 relative" aria-labelledby="process-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -42,7 +42,7 @@ export function Process() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6">
+          <h2 id="process-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
             From{" "}
             <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
               Pain

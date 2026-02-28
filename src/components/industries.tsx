@@ -14,7 +14,7 @@ const industries = [
 
 export function Industries() {
   return (
-    <section id="industries" className="py-32 relative">
+    <section id="industries" className="py-32 relative" aria-labelledby="industries-heading">
       <div className="absolute inset-0 bg-slate-950" />
       <div className="absolute inset-0 circuit-pattern opacity-20" />
       
@@ -25,7 +25,7 @@ export function Industries() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6">
+          <h2 id="industries-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
             Built For{" "}
             <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
               Your Industry
@@ -38,7 +38,7 @@ export function Industries() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {industries.map((industry, i) => (
-            <motion.div
+            <motion.article
               key={industry.name}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -64,7 +64,7 @@ export function Industries() {
                   <p className="text-sm text-slate-300">{industry.solution}</p>
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

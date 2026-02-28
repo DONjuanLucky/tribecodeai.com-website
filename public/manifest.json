@@ -1,0 +1,41 @@
+{
+  "name": "TribeCode AI",
+  "short_name": "TribeCode",
+  "description": "Intelligent AI voice agents and business automation solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030712",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology"],
+  "shortcuts": [
+    {
+      "name": "Get Qualified",
+      "short_name": "Qualify",
+      "description": "Complete our qualification form",
+      "url": "/#contact",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Our Services",
+      "short_name": "Services",
+      "description": "View our AI solutions",
+      "url": "/#services",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

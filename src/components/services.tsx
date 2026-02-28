@@ -7,28 +7,28 @@ const services = [
   {
     icon: Mic,
     title: "AI Voice Agents",
-    description: "Intelligent phone agents that answer 24/7, book appointments, qualify leads, and handle customer inquiries with human-like conversation.",
+    description: "Intelligent phone agents that answer 24/7, book appointments, qualify leads, and handle customer inquiries with human-like conversation. Never miss another call or revenue opportunity.",
     features: ["Round-the-clock availability", "Natural conversation flow", "Calendar integration", "Lead qualification"],
     gradient: "from-sky-500 to-cyan-500",
   },
   {
     icon: Workflow,
     title: "Business Automation",
-    description: "Custom workflows that eliminate repetitive tasks — lead follow-up, appointment reminders, payment chasing, and internal notifications.",
+    description: "Custom workflows that eliminate repetitive tasks — instant lead follow-up, appointment reminders, payment chasing, and internal notifications. Save 20+ hours per week.",
     features: ["Instant lead response", "Automated reminders", "Payment follow-ups", "Custom triggers"],
     gradient: "from-cyan-500 to-teal-500",
   },
   {
     icon: Palette,
     title: "Web Experiences",
-    description: "Conversion-focused websites and landing pages that don't just look stunning — they turn visitors into paying customers.",
+    description: "Conversion-focused websites and landing pages that don't just look stunning — they turn visitors into paying customers. Mobile-first, SEO-optimized, and blazing fast.",
     features: ["Mobile-first design", "SEO optimized", "Lightning fast", "AI chat integration"],
     gradient: "from-teal-500 to-emerald-500",
   },
   {
     icon: Brain,
-    title: "AI Strategy",
-    description: "Comprehensive audits identifying your highest-ROI automation opportunities with a clear implementation roadmap.",
+    title: "AI Strategy & Consulting",
+    description: "Comprehensive business audits identifying your highest-ROI automation opportunities with a clear implementation roadmap. Know exactly what to automate and why.",
     features: ["Process mapping", "ROI analysis", "Vendor recommendations", "Implementation support"],
     gradient: "from-emerald-500 to-green-500",
   },
@@ -36,7 +36,7 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-32 relative overflow-hidden">
+    <section id="services" className="py-32 relative overflow-hidden" aria-labelledby="services-heading">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
       <div className="absolute inset-0 circuit-pattern opacity-30" />
@@ -59,7 +59,7 @@ export function Services() {
             <span>Our Expertise</span>
           </motion.div>
           
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6">
+          <h2 id="services-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
             Solutions That{" "}
             <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
               Transform
@@ -73,7 +73,7 @@ export function Services() {
         {/* Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {services.map((service, i) => (
-            <motion.div
+            <motion.article
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ export function Services() {
               <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
               <p className="text-slate-400 mb-6 leading-relaxed">{service.description}</p>
 
-              <ul className="space-y-2 mb-8">
+              <ul className="space-y-2 mb-8" aria-label={`${service.title} features`}>
                 {service.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-slate-300">
                     <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient}`} />
@@ -107,7 +107,7 @@ export function Services() {
               <a href="#contact" className={`inline-flex items-center gap-2 text-sm font-semibold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent hover:opacity-80 transition-opacity`}>
                 Learn More <ArrowRight className="w-4 h-4" />
               </a>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

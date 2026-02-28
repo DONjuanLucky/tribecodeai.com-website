@@ -1,227 +1,265 @@
 "use client"
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
-import { useRef } from "react"
-import { ArrowRight, Cpu, Zap, Shield, Globe } from "lucide-react"
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion"
+import { useRef, useEffect, useState } from "react"
+import { Cpu, Zap, Shield, TrendingUp, Play, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 500], [0, 100])
-  const y2 = useTransform(scrollY, [0, 500], [0, -150])
-  const opacity = useTransform(scrollY, [0, 400], [1, 0])
+  const y1 = useTransform(scrollY, [0, 600], [0, 200])
+  const y2 = useTransform(scrollY, [0, 600], [0, -100])
+  const opacity = useTransform(scrollY, [0, 500], [1, 0])
+  const scale = useTransform(scrollY, [0, 500], [1, 0.95])
+  
+  const springY = useSpring(y1, { stiffness: 80, damping: 25 })
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (rect) {
+        mouseX.set(e.clientX - rect.left)
+        mouseY.set(e.clientY - rect.top)
+      }
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [mouseX, mouseY])
 
-  const springY = useSpring(y1, { stiffness: 100, damping: 30 })
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      aria-label="Hero section"
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950/20">
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 circuit-pattern opacity-50" />
-        
-        {/* Animated Grid */}
-        <motion.div
-          animate={{
-            backgroundPosition: ["0px 0px", "40px 40px"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-          }}
-          className="absolute inset-0 circuit-pattern"
-        />
+      {/* Background */}
+      <div className="absolute inset-0 gradient-mesh" />
+      <div className="absolute inset-0 circuit-grid opacity-40" />
+      
+      {/* Animated Orbs */}
+      <motion.div
+        style={{ y: springY }}
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-30 blur-3xl"
+        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-sky-600 to-cyan-500 rounded-full" />
+      </motion.div>
+      
+      <motion.div
+        style={{ y: y2 }}
+        className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl"
+        animate={{ scale: [1.3, 1, 1.3], opacity: [0.15, 0.3, 0.15] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-l from-cyan-600 to-sky-500 rounded-full" />
+      </motion.div>
 
-        {/* Floating Orbs */}
-        <motion.div
-          style={{ y: springY }}
-          className="absolute top-20 left-1/4 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        
-        <motion.div
-          style={{ y: y2 }}
-          className="absolute bottom-20 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
+      {/* Rotating Rings */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }} className="w-[700px] h-[700px] border border-sky-500/10 rounded-full" />
+        <motion.div animate={{ rotate: -360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-cyan-500/10 rounded-full" />
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-sky-400/10 rounded-full" />
+      </div>
 
-        {/* Rotating Ring */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-sky-500/5 rounded-full"
-        />
-        
-        <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-cyan-500/5 rounded-full"
-        />
-
-        {/* Floating Particles */}
-        {[...Array(30)].map((_, i) => (
+      {/* Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(40)].map((_, i) => (
           <motion.div
             key={i}
-            initial={{
-              y: Math.random() * 1000,
-              x: Math.random() * 1000,
-              opacity: 0,
-              scale: 0,
-            }}
-            animate={{
-              y: [Math.random() * 1000, Math.random() * 1000, Math.random() * 1000],
-              opacity: [0, 0.5, 0],
-              scale: [0, Math.random() * 4 + 2, 0],
-            }}
-            transition={{
-              duration: Math.random() * 15 + 10,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
-            }}
             className="absolute w-1 h-1 bg-sky-400 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              opacity: 0,
+              "--tx": `${(Math.random() - 0.5) * 100}px`,
+              "--ty": `${-Math.random() * 200}px`,
+              "--duration": `${Math.random() * 6 + 4}s`,
+              "--delay": `${Math.random() * 3}s`,
+            } as React.CSSProperties}
           />
         ))}
       </div>
 
+      {/* Mouse Glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(14, 165, 233, 0.1), transparent 40%)`,
+        }}
+      />
+
       {/* Content */}
       <motion.div
-        style={{ opacity }}
+        style={{ opacity, scale }}
         className="relative z-10 max-w-7xl mx-auto px-6 py-20 text-center"
       >
-        {/* Badge */}
+        {/* Logo */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium backdrop-blur-sm"
+          initial={{ opacity: 0, y: 30 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="mb-12"
         >
-          <Cpu className="w-4 h-4" />
-          <span>Next-Gen AI Automation for Modern Businesses</span>
+          <div className="inline-flex items-center gap-4 mb-8">
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={loaded ? { scale: 1, rotate: 0 } : {}}
+              transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+              className="relative w-20 h-20"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-2xl rotate-12 opacity-50 blur-lg" />
+              <div className="relative w-full h-full bg-gradient-to-br from-sky-500 to-cyan-500 rounded-2xl flex items-center justify-center glow-primary">
+                <Cpu className="w-10 h-10 text-white" />
+              </div>
+            </motion.div>
+            
+            <div className="text-left">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={loaded ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex items-baseline gap-1"
+              >
+                <span className="text-4xl md:text-5xl font-black text-white tracking-tight">tribe</span>
+                <span className="text-4xl md:text-5xl font-black bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">code</span>
+                <span className="text-4xl md:text-5xl font-black text-sky-400 tracking-tight">AI</span>
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={loaded ? { opacity: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-sm md:text-base text-sky-400/80 font-mono tracking-widest uppercase"
+              >
+                Intelligent Solutions
+              </motion.p>
+            </div>
+          </div>
         </motion.div>
 
-        {/* Main Headline with Glow */}
+        {/* H1 - Main Headline */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight glow-text"
+          initial={{ opacity: 0, y: 40 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 leading-[1.1] tracking-tight font-display"
         >
-          Intelligent
+          Automate the
           <br />
-          <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-sky-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-shimmer">
-            Solutions
+          <span className="relative inline-block">
+            <span className="bg-gradient-to-r from-sky-400 via-cyan-400 to-sky-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-shift">
+              Impossible
+            </span>
+            <motion.div
+              className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-sky-500/30 to-cyan-500/30 blur-md"
+              initial={{ scaleX: 0 }}
+              animate={loaded ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.8, delay: 1 }}
+            />
           </span>
           <br />
-          That Scale
+          Into Reality
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed"
         >
-          AI voice agents, intelligent automation, and conversion-focused web experiences.
-          Built for businesses ready to dominate their market.
+          AI voice agents that never sleep. Automation that scales infinitely.
+          <span className="text-slate-300 font-medium"> Built for businesses ready to dominate.</span>
         </motion.p>
 
-        {/* Feature Pills */}
+        {/* Features */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
           {[
-            { icon: Zap, text: "24/7 AI Coverage" },
-            { icon: Cpu, text: "Smart Automation" },
-            { icon: Shield, text: "Enterprise-Grade" },
-            { icon: Globe, text: "Global Ready" },
+            { icon: Zap, text: "24/7 AI Coverage", color: "from-yellow-500 to-orange-500" },
+            { icon: Cpu, text: "Neural Networks", color: "from-sky-500 to-cyan-500" },
+            { icon: Shield, text: "Enterprise Security", color: "from-emerald-500 to-green-500" },
+            { icon: TrendingUp, text: "Measurable ROI", color: "from-purple-500 to-pink-500" },
           ].map((feature, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.05, y: -2 }}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 text-slate-300 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={loaded ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.8 + i * 0.1 }}
+              whileHover={{ scale: 1.05, y: -3 }}
+              className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900/50 border border-slate-700/50 backdrop-blur-sm hover:border-sky-500/50 transition-all"
             >
-              <feature.icon className="w-4 h-4 text-sky-400" />
-              <span className="font-medium text-sm">{feature.text}</span>
+              <div className={`w-5 h-5 rounded bg-gradient-to-br ${feature.color} flex items-center justify-center`}>
+                <feature.icon className="w-3 h-3 text-white" />
+              </div>
+              <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">{feature.text}</span>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={loaded ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 1 }}
+          className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-16"
         >
           <Button
             size="lg"
-            className="group relative overflow-hidden"
+            className="group relative overflow-hidden rounded-full px-10 h-14 text-lg font-semibold"
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
           >
-            <span className="relative z-10">
+            <span className="relative z-10 flex items-center gap-2">
               Start Your Transformation
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
-            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-sky-600 to-cyan-600 opacity-100 group-hover:opacity-90 transition-opacity" />
+            <div className="absolute inset-0 shimmer-overlay" />
           </Button>
           
           <Button
-            variant="secondary"
+            variant="outline"
             size="lg"
+            className="rounded-full px-10 h-14 text-lg font-semibold border-slate-700 hover:bg-slate-800/50 group"
             onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}
           >
-            Explore Solutions
+            <Play className="w-5 h-5 mr-2 fill-current" />
+            See How It Works
           </Button>
         </motion.div>
 
-        {/* Trust Indicators */}
+        {/* Trust */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-20 pt-10 border-t border-slate-800/50"
+          animate={loaded ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 1.3 }}
+          className="pt-12 border-t border-slate-800/50"
         >
-          <p className="text-slate-500 text-sm mb-6">Trusted by innovative businesses across</p>
-          <div className="flex flex-wrap justify-center gap-6 text-slate-500 font-semibold text-sm">
-            {["Santa Cruz", "Monterey Bay", "San Jose", "San Francisco", "Los Angeles"].map((city, i) => (
-              <motion.span
+          <p className="text-slate-500 text-sm mb-6 font-mono">TRUSTED BY INNOVATORS ACROSS</p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            {["Santa Cruz", "Silicon Valley", "San Francisco", "Los Angeles", "New York"].map((city, i) => (
+              <motion.div
                 key={city}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4 + i * 0.1 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={loaded ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 1.5 + i * 0.1 }}
                 className="flex items-center gap-2"
               >
-                <span className="w-2 h-2 rounded-full bg-sky-500/50" />
-                {city}
-              </motion.span>
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 glow-text-primary" />
+                <span className="text-slate-400 font-medium">{city}</span>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -230,16 +268,17 @@ export function Hero() {
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        animate={loaded ? { opacity: 1 } : {}}
+        transition={{ delay: 2 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        aria-hidden="true"
       >
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-8 h-14 rounded-full border-2 border-sky-500/30 flex justify-center pt-2"
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-7 h-12 rounded-full border-2 border-sky-500/30 flex justify-center pt-2"
         >
-          <motion.div className="w-1.5 h-3 bg-sky-400 rounded-full" />
+          <motion.div className="w-1.5 h-3 bg-gradient-to-b from-sky-400 to-cyan-400 rounded-full" />
         </motion.div>
       </motion.div>
     </section>
