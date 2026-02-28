@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -126,7 +127,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="TribeCode AI" />
       </head>
       <body className="antialiased font-sans">
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

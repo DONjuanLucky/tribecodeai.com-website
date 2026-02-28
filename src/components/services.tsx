@@ -46,13 +46,13 @@ export function Services() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-20"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium"
           >
             <Brain className="w-4 h-4" />
@@ -77,7 +77,7 @@ export function Services() {
               key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -5 }}
               className="group relative p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-sky-500/30 transition-all duration-300"

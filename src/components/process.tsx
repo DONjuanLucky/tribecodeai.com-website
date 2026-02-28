@@ -39,7 +39,7 @@ export function Process() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-20"
         >
           <h2 id="process-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
@@ -67,7 +67,7 @@ export function Process() {
                 key={step.num}
                 initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: i * 0.1 }}
                 className={`lg:flex items-center gap-12 ${i % 2 === 0 ? "" : "lg:flex-row-reverse"}`}
               >
