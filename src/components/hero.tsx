@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTe
 import { useRef, useEffect, useState } from "react"
 import { Cpu, Zap, Shield, TrendingUp, Play, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -18,15 +19,32 @@ export function Hero() {
   const mouseY = useMotionValue(0)
   
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    let containerLeft = 0
+    let containerTop = 0
+
+    const updateRect = () => {
       const rect = containerRef.current?.getBoundingClientRect()
       if (rect) {
-        mouseX.set(e.clientX - rect.left)
-        mouseY.set(e.clientY - rect.top)
+        containerLeft = rect.left + window.scrollX
+        containerTop = rect.top + window.scrollY
       }
     }
+
+    // Initial calculation
+    updateRect()
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.pageX - containerLeft)
+      mouseY.set(e.pageY - containerTop)
+    }
+
+    window.addEventListener("resize", updateRect)
     window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+
+    return () => {
+      window.removeEventListener("resize", updateRect)
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
   }, [mouseX, mouseY])
 
   const [loaded, setLoaded] = useState(false)
@@ -115,16 +133,15 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="inline-block max-w-3xl"
           >
-            <img
+            <Image
               src="/images/tribecode-logo.svg"
               alt="TribeCode AI - Intelligent Solutions"
               className="w-full h-auto max-w-2xl mx-auto"
-              width="800"
-              height="200"
+              width={800}
+              height={200}
               priority
             />
           </motion.div>
-        </motion.div>
         </motion.div>
 
         {/* H1 - Main Headline */}
