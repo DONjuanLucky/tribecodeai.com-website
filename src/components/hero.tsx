@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTe
 import { useRef, useEffect, useState } from "react"
 import { Cpu, Zap, Shield, TrendingUp, Play, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Hero3D } from "./Hero3D"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -43,6 +44,9 @@ export function Hero() {
       {/* Background */}
       <div className="absolute inset-0 gradient-mesh" />
       <div className="absolute inset-0 circuit-grid opacity-40" />
+
+      {/* 3D Visualizer */}
+      <Hero3D />
       
       {/* Animated Orbs */}
       <motion.div
@@ -121,10 +125,8 @@ export function Hero() {
               className="w-full h-auto max-w-2xl mx-auto"
               width="800"
               height="200"
-              priority
             />
           </motion.div>
-        </motion.div>
         </motion.div>
 
         {/* H1 - Main Headline */}

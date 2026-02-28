@@ -1,19 +1,28 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { motion } from "framer-motion"
-import { Send, CheckCircle2, Building2, Users, DollarSign, Phone, Mail, MapPin } from "lucide-react"
+import { Send, CheckCircle2, Building2, Users, DollarSign, Phone, Mail, MapPin, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { submitContactForm } from "@/app/actions"
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
+    const formData = new FormData(e.currentTarget)
+
+    startTransition(async () => {
+      const result = await submitContactForm(formData)
+      if (result.success) {
+        setSubmitted(true)
+      }
+    })
   }
 
   return (
@@ -257,9 +266,18 @@ export function Contact() {
                   <Input id="message" placeholder="Tell us more about your specific needs..." />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full group">
-                  Submit Application
-                  <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <Button type="submit" size="lg" className="w-full group" disabled={isPending}>
+                  {isPending ? (
+                    <>
+                      Submitting...
+                      <Loader2 className="w-4 h-4 animate-spin ml-2" />
+                    </>
+                  ) : (
+                    <>
+                      Submit Application
+                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform ml-2" />
+                    </>
+                  )}
                 </Button>
 
                 <p className="text-slate-500 text-xs text-center">

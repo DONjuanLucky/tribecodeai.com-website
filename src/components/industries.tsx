@@ -22,7 +22,7 @@ export function Industries() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-16"
         >
           <h2 id="industries-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
@@ -42,7 +42,7 @@ export function Industries() {
               key={industry.name}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ scale: 1.02 }}
               className="group p-6 rounded-2xl bg-slate-900/30 border border-slate-800 hover:border-sky-500/30 transition-all"
