@@ -1,113 +1,99 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Mic, Workflow, Palette, Brain, ArrowRight } from "lucide-react"
+import { Mic, Workflow, Palette, Brain, ArrowUpRight } from "lucide-react"
+import TextBlockAnimation from "@/components/ui/text-block-animation"
+import { Ripple } from "@/components/ui/material-design-3-ripple"
 
 const services = [
   {
+    num: "01",
     icon: Mic,
     title: "AI Voice Agents",
-    description: "Intelligent phone agents that answer 24/7, book appointments, qualify leads, and handle customer inquiries with human-like conversation. Never miss another call or revenue opportunity.",
-    features: ["Round-the-clock availability", "Natural conversation flow", "Calendar integration", "Lead qualification"],
-    gradient: "from-sky-500 to-cyan-500",
+    description:
+      "Never miss another $3,000 call. Our voice agents answer 24/7, qualify leads, and book appointments — with conversations so natural, callers won't know the difference.",
+    features: ["Always-on availability", "Natural conversation", "Calendar sync", "Lead scoring"],
   },
   {
+    num: "02",
     icon: Workflow,
     title: "Business Automation",
-    description: "Custom workflows that eliminate repetitive tasks — instant lead follow-up, appointment reminders, payment chasing, and internal notifications. Save 20+ hours per week.",
-    features: ["Instant lead response", "Automated reminders", "Payment follow-ups", "Custom triggers"],
-    gradient: "from-cyan-500 to-teal-500",
+    description:
+      "Stop losing leads to slow follow-up. Custom workflows that respond to inquiries in seconds, chase payments automatically, and give you 20+ hours back every week.",
+    features: ["Instant lead response", "Smart reminders", "Payment follow-ups", "Custom triggers"],
   },
   {
+    num: "03",
     icon: Palette,
     title: "Web Experiences",
-    description: "Conversion-focused websites and landing pages that don't just look stunning — they turn visitors into paying customers. Mobile-first, SEO-optimized, and blazing fast.",
-    features: ["Mobile-first design", "SEO optimized", "Lightning fast", "AI chat integration"],
-    gradient: "from-teal-500 to-emerald-500",
+    description:
+      "Your website should close deals, not just look pretty. Conversion-focused sites that turn visitors into paying customers — mobile-first, blazing fast, SEO-ready.",
+    features: ["Mobile-first", "SEO optimized", "Fast loading", "AI chat ready"],
   },
   {
+    num: "04",
     icon: Brain,
-    title: "AI Strategy & Consulting",
-    description: "Comprehensive business audits identifying your highest-ROI automation opportunities with a clear implementation roadmap. Know exactly what to automate and why.",
-    features: ["Process mapping", "ROI analysis", "Vendor recommendations", "Implementation support"],
-    gradient: "from-emerald-500 to-green-500",
+    title: "AI Strategy",
+    description:
+      "Know exactly where you're bleeding money — and how to stop it. We audit your processes, map the gaps, and hand you a clear roadmap with projected ROI.",
+    features: ["Process mapping", "ROI analysis", "Vendor guidance", "Implementation plan"],
   },
 ]
 
 export function Services() {
   return (
-    <section id="services" className="py-32 relative overflow-hidden" aria-labelledby="services-heading">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
-      <div className="absolute inset-0 circuit-pattern opacity-30" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+    <section id="services" className="py-32 relative" aria-labelledby="services-heading">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium"
-          >
-            <Brain className="w-4 h-4" />
-            <span>Our Expertise</span>
-          </motion.div>
-          
-          <h2 id="services-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
-            Solutions That{" "}
-            <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
-              Transform
-            </span>
-          </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            From AI voice agents to complete automation stacks — we build what your business needs to scale.
-          </p>
-        </motion.div>
-
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service, i) => (
-            <motion.article
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="group relative p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:border-sky-500/30 transition-all duration-300"
+        <div className="mb-20">
+          <span className="text-[var(--accent)] font-mono text-sm tracking-[0.15em] uppercase mb-4 block">
+            What We Build
+          </span>
+          <TextBlockAnimation blockColor="var(--amber)" stagger={0.06} duration={0.5}>
+            <h2
+              id="services-heading"
+              className="text-4xl md:text-6xl font-display font-extrabold text-[var(--text-primary)] leading-[1.05] max-w-3xl"
             >
-              {/* Glow Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`} />
-              
-              {/* Icon */}
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6`}>
-                <div className="w-full h-full bg-slate-900 rounded-xl flex items-center justify-center">
-                  <service.icon className="w-7 h-7 text-white" />
+              Solutions that stop{"\n"}revenue leaks.
+            </h2>
+          </TextBlockAnimation>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 gap-px bg-[var(--border)] rounded-2xl overflow-hidden">
+          {services.map((service) => (
+            <article
+              key={service.title}
+              className="relative bg-[var(--bg)] cursor-pointer"
+            >
+              <Ripple color="text-[var(--accent)]" opacity={0.1}>
+                <div className="p-8 md:p-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-5xl font-display font-extrabold text-[var(--border)]">
+                      {service.num}
+                    </span>
+                    <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center">
+                      <service.icon className="w-6 h-6 text-[var(--accent)]" />
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                    {service.title}
+                    <ArrowUpRight className="w-5 h-5 text-[var(--accent)] opacity-50" />
+                  </h3>
+
+                  <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">{service.description}</p>
+
+                  <ul className="space-y-2">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
+                        <span className="w-1 h-1 rounded-full bg-[var(--accent)]" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-
-              <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
-              <p className="text-slate-400 mb-6 leading-relaxed">{service.description}</p>
-
-              <ul className="space-y-2 mb-8" aria-label={`${service.title} features`}>
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3 text-slate-300">
-                    <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient}`} />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <a href="#contact" className={`inline-flex items-center gap-2 text-sm font-semibold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent hover:opacity-80 transition-opacity`}>
-                Learn More <ArrowRight className="w-4 h-4" />
-              </a>
-            </motion.article>
+              </Ripple>
+            </article>
           ))}
         </div>
       </div>

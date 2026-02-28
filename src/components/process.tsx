@@ -1,90 +1,91 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CheckCircle2 } from "lucide-react"
+import TextBlockAnimation from "@/components/ui/text-block-animation"
 
 const steps = [
   {
     num: "01",
     title: "Discovery Call",
-    desc: "We map your business processes and identify revenue leaks. No pitch — just honest analysis.",
-    duration: "30-45 min",
+    desc: "We map your business processes, find where you're bleeding money, and give you an honest ROI analysis. No pitch, no pressure — just clarity.",
+    duration: "30 min",
   },
   {
     num: "02",
-    title: "ROI Proposal",
-    desc: "We show the dollar cost of inaction and present a clear solution with expected returns.",
-    duration: "Within 48 hours",
+    title: "Custom Proposal",
+    desc: "Within 48 hours, you'll see the exact dollar cost of inaction and a clear solution with projected returns. Numbers, not promises.",
+    duration: "48 hrs",
   },
   {
     num: "03",
     title: "Build & Test",
-    desc: "Custom AI agent or automation built to your specs, rigorously tested before launch.",
-    duration: "1-2 weeks",
+    desc: "We build your custom AI agent or automation system, rigorously test every scenario, and make sure it works before it touches a single customer.",
+    duration: "1–2 weeks",
   },
   {
     num: "04",
     title: "Launch & Optimize",
-    desc: "Go live with monitoring and continuous optimization. Regular reports showing real results.",
+    desc: "Go live with full monitoring. We continuously optimize based on real data and send you regular reports showing measurable results.",
     duration: "Ongoing",
   },
 ]
 
+const stepVariant = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.1, duration: 0.4, ease: "easeOut" as const },
+  }),
+}
+
 export function Process() {
   return (
     <section id="process" className="py-32 relative" aria-labelledby="process-heading">
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <h2 id="process-heading" className="text-4xl md:text-6xl font-black text-white mb-6">
-            From{" "}
-            <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
-              Pain
-            </span>{" "}
-            To{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              Profit
-            </span>
-          </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            A clear path to stopping revenue leaks in 4 steps.
-          </p>
-        </motion.div>
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="mb-20">
+          <span className="text-[var(--accent)] font-mono text-sm tracking-[0.15em] uppercase mb-4 block">
+            How It Works
+          </span>
+          <TextBlockAnimation blockColor="#f5f0e8" stagger={0.06} duration={0.5}>
+            <h2
+              id="process-heading"
+              className="text-4xl md:text-6xl font-display font-extrabold text-[var(--text-primary)] leading-[1.05] max-w-3xl"
+            >
+              From first call to{"\n"}measurable results.
+            </h2>
+          </TextBlockAnimation>
+        </div>
 
+        {/* Timeline — static line, no scroll tracking */}
         <div className="relative">
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-sky-500 via-cyan-500 to-emerald-500" />
+          <div className="hidden md:block absolute left-[27px] top-0 bottom-0 w-px gradient-line" />
 
-          <div className="space-y-16 lg:space-y-0">
+          <div className="space-y-16">
             {steps.map((step, i) => (
               <motion.div
                 key={step.num}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`lg:flex items-center gap-12 ${i % 2 === 0 ? "" : "lg:flex-row-reverse"}`}
+                custom={i}
+                variants={stepVariant}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                className="flex gap-8 md:gap-12 items-start"
               >
-                <div className={`lg:w-1/2 ${i % 2 === 0 ? "lg:text-right" : "lg:text-left"}`}>
-                  <div className={`inline-flex items-center gap-3 mb-4 ${i % 2 === 0 ? "lg:flex-row-reverse" : ""}`}>
-                    <span className="text-5xl font-black bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">{step.num}</span>
-                    <span className="px-3 py-1 rounded-full bg-slate-800 text-sky-400 text-sm font-medium">{step.duration}</span>
+                <div className="hidden md:flex flex-shrink-0 w-[55px] items-center justify-center">
+                  <div className="w-3.5 h-3.5 rounded-full bg-[var(--bg)] border-2 border-[var(--accent)] relative z-10" />
+                </div>
+
+                <div className="flex-1 pb-2">
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-4xl font-display font-extrabold text-[var(--accent)]">{step.num}</span>
+                    <span className="px-3 py-1 rounded-full bg-[var(--bg-card)] border border-[var(--border)] text-[var(--text-muted)] text-xs font-mono">
+                      {step.duration}
+                    </span>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{step.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{step.desc}</p>
+                  <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-3">{step.title}</h3>
+                  <p className="text-[var(--text-secondary)] leading-relaxed max-w-xl">{step.desc}</p>
                 </div>
-
-                <div className="hidden lg:flex w-4 h-4 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 items-center justify-center flex-shrink-0">
-                  <div className="w-2 h-2 rounded-full bg-slate-950" />
-                </div>
-
-                <div className="hidden lg:block lg:w-1/2" />
               </motion.div>
             ))}
           </div>

@@ -1,12 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
-import { Send, CheckCircle2, Building2, Users, DollarSign, Phone, Mail, MapPin } from "lucide-react"
+import { CheckCircle2, Phone, Mail, MapPin, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+const valueProps = [
+  "Free qualification & ROI analysis",
+  "No pressure, no commitment",
+  "Custom solution roadmap",
+  "Transparent, honest pricing",
+]
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
@@ -17,149 +23,126 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 relative">
-      <div className="absolute inset-0 bg-slate-950" />
-      <div className="absolute inset-0 circuit-pattern opacity-20" />
-      
-      {/* Glow Effects */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+    <section id="contact" className="py-32 relative" aria-labelledby="contact-heading">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16">
-          {/* Left - Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-              Let's Build Your{" "}
-              <span className="bg-gradient-to-r from-sky-400 to-cyan-400 bg-clip-text text-transparent">
-                Solution
-              </span>
+          {/* Left — Info */}
+          <div>
+            <span className="text-[var(--accent)] font-mono text-sm tracking-[0.15em] uppercase mb-4 block">
+              Get Started
+            </span>
+            <h2
+              id="contact-heading"
+              className="text-4xl md:text-5xl font-display font-extrabold text-[var(--text-primary)] leading-[1.1] mb-6"
+            >
+              Let's build your
+              <br />
+              <span className="text-accent-gradient">unfair advantage.</span>
             </h2>
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-              Fill out the qualification form. We'll review your needs and schedule a targeted 
-              discovery call to discuss your custom solution and ROI.
+            <p className="text-lg text-[var(--text-secondary)] mb-10 leading-relaxed">
+              Fill out the form and we'll review your needs within 24 hours.
+              Then we'll schedule a targeted discovery call to show you exactly where you're losing money — and how to stop it.
             </p>
 
-            <div className="space-y-6 mb-12">
-              <a href="tel:+18313458935" className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-lg bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500/20 transition-colors">
-                  <Phone className="w-5 h-5 text-sky-400" />
+            <address className="not-italic space-y-5 mb-10">
+              <a href="tel:+18313458935" className="flex items-center gap-4 group" aria-label="Call us at (831) 345-8935">
+                <div className="w-11 h-11 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center group-hover:bg-[var(--accent)] transition-colors duration-300">
+                  <Phone className="w-5 h-5 text-[var(--accent)] group-hover:text-white transition-colors" />
                 </div>
                 <div>
-                  <div className="text-sm text-slate-500">Call Us</div>
-                  <div className="text-lg font-bold text-white">(831) 345-8935</div>
+                  <div className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider">Call Us</div>
+                  <div className="text-lg font-display font-bold text-[var(--text-primary)]">(831) 345-8935</div>
                 </div>
               </a>
 
-              <a href="mailto:info@tribecodeai.com" className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-lg bg-sky-500/10 flex items-center justify-center group-hover:bg-sky-500/20 transition-colors">
-                  <Mail className="w-5 h-5 text-sky-400" />
+              <a href="mailto:info@tribecodeai.com" className="flex items-center gap-4 group" aria-label="Email us at info@tribecodeai.com">
+                <div className="w-11 h-11 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center group-hover:bg-[var(--accent)] transition-colors duration-300">
+                  <Mail className="w-5 h-5 text-[var(--accent)] group-hover:text-white transition-colors" />
                 </div>
                 <div>
-                  <div className="text-sm text-slate-500">Email Us</div>
-                  <div className="text-lg font-bold text-white">info@tribecodeai.com</div>
+                  <div className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider">Email Us</div>
+                  <div className="text-lg font-display font-bold text-[var(--text-primary)]">info@tribecodeai.com</div>
                 </div>
               </a>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-sky-500/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-sky-400" />
+              <div className="flex items-center gap-4" aria-label="Located in Santa Cruz, California">
+                <div className="w-11 h-11 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-[var(--accent)]" />
                 </div>
                 <div>
-                  <div className="text-sm text-slate-500">Location</div>
-                  <div className="text-lg font-bold text-white">Santa Cruz, CA</div>
+                  <div className="text-xs text-[var(--text-muted)] font-mono uppercase tracking-wider">Location</div>
+                  <div className="text-lg font-display font-bold text-[var(--text-primary)]">Santa Cruz, CA</div>
                 </div>
               </div>
-            </div>
+            </address>
 
-            {/* Value Props */}
-            <div className="space-y-4">
-              {[
-                "Free qualification & ROI analysis",
-                "No pressure consultation",
-                "Custom solution roadmap",
-                "Transparent pricing",
-              ].map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-3"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  <span className="text-slate-300">{item}</span>
-                </motion.div>
+            <div className="space-y-3">
+              {valueProps.map((item) => (
+                <div key={item} className="flex items-center gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
+                  <span className="text-[var(--text-secondary)] text-sm">{item}</span>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right - Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+          {/* Right — Form */}
+          <div>
             {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 text-center"
-              >
-                <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+              <div className="p-10 rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] text-center">
+                <div className="w-16 h-16 rounded-full bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle2 className="w-8 h-8 text-[var(--accent)]" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">Application Received</h3>
-                <p className="text-slate-400 mb-6">
-                  We'll review your qualification and reach out within 24 hours to schedule your discovery call.
+                <h3 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-3">Application Received</h3>
+                <p className="text-[var(--text-secondary)] mb-6">
+                  We'll review your details and reach out within 24 hours to schedule your discovery call.
                 </p>
-                <Button variant="secondary" onClick={() => setSubmitted(false)}>
+                <Button variant="outline" onClick={() => setSubmitted(false)}>
                   Submit Another
                 </Button>
-              </motion.div>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="p-8 md:p-10 rounded-2xl bg-[var(--bg-card)] border border-[var(--border)] space-y-5"
+                aria-label="Qualification form"
+              >
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Qualification Form</h3>
-                  <p className="text-slate-400 text-sm">Help us understand your needs for a targeted solution.</p>
+                  <h3 className="text-xl font-display font-bold text-[var(--text-primary)] mb-1">Qualification Form</h3>
+                  <p className="text-[var(--text-muted)] text-sm">Tell us about your needs for a targeted solution.</p>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name *</Label>
-                    <Input id="firstName" placeholder="John" required />
+                    <Label htmlFor="contact-firstName">First Name *</Label>
+                    <Input id="contact-firstName" placeholder="John" required autoComplete="given-name" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input id="lastName" placeholder="Smith" required />
+                    <Label htmlFor="contact-lastName">Last Name *</Label>
+                    <Input id="contact-lastName" placeholder="Smith" required autoComplete="family-name" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="business">Business Name *</Label>
-                  <Input id="business" placeholder="Smith Plumbing Co." required />
+                  <Label htmlFor="contact-business">Business Name *</Label>
+                  <Input id="contact-business" placeholder="Smith Plumbing Co." required autoComplete="organization" />
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone *</Label>
-                    <Input id="phone" type="tel" placeholder="(831) 555-0123" required />
+                    <Label htmlFor="contact-phone">Phone *</Label>
+                    <Input id="contact-phone" type="tel" placeholder="(831) 555-0123" required autoComplete="tel" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input id="email" type="email" placeholder="john@example.com" required />
+                    <Label htmlFor="contact-email">Email *</Label>
+                    <Input id="contact-email" type="email" placeholder="john@example.com" required autoComplete="email" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="industry">Industry *</Label>
+                  <Label htmlFor="contact-industry">Industry *</Label>
                   <Select required>
-                    <SelectTrigger>
+                    <SelectTrigger id="contact-industry">
                       <SelectValue placeholder="Select your industry" />
                     </SelectTrigger>
                     <SelectContent>
@@ -175,99 +158,34 @@ export function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="employees">Company Size *</Label>
+                  <Label htmlFor="contact-challenge">Biggest Challenge *</Label>
                   <Select required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1-5">1-5 employees</SelectItem>
-                      <SelectItem value="6-20">6-20 employees</SelectItem>
-                      <SelectItem value="21-50">21-50 employees</SelectItem>
-                      <SelectItem value="50+">50+ employees</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="revenue">Annual Revenue *</Label>
-                  <Select required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select revenue range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="under-500k">Under $500K</SelectItem>
-                      <SelectItem value="500k-1m">$500K - $1M</SelectItem>
-                      <SelectItem value="1m-5m">$1M - $5M</SelectItem>
-                      <SelectItem value="5m+">$5M+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="challenge">Biggest Challenge *</Label>
-                  <Select required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="What's your main pain point?" />
+                    <SelectTrigger id="contact-challenge">
+                      <SelectValue placeholder="Main pain point" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="missed-calls">Missing calls / leads</SelectItem>
-                      <SelectItem value="followup">Poor follow-up system</SelectItem>
+                      <SelectItem value="followup">Poor follow-up</SelectItem>
                       <SelectItem value="scheduling">Scheduling chaos</SelectItem>
-                      <SelectItem value="no-shows">No-shows / cancellations</SelectItem>
-                      <SelectItem value="admin">Too much admin work</SelectItem>
+                      <SelectItem value="no-shows">No-shows</SelectItem>
+                      <SelectItem value="admin">Too much admin</SelectItem>
                       <SelectItem value="website">Website not converting</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="budget">Investment Budget *</Label>
-                  <Select required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select budget range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1k-3k">$1K - $3K</SelectItem>
-                      <SelectItem value="3k-5k">$3K - $5K</SelectItem>
-                      <SelectItem value="5k-10k">$5K - $10K</SelectItem>
-                      <SelectItem value="10k+">$10K+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="timeline">Timeline *</Label>
-                  <Select required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="When do you want to start?" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="asap">ASAP</SelectItem>
-                      <SelectItem value="2weeks">Within 2 weeks</SelectItem>
-                      <SelectItem value="month">Within a month</SelectItem>
-                      <SelectItem value="researching">Just researching</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Additional Details</Label>
-                  <Input id="message" placeholder="Tell us more about your specific needs..." />
-                </div>
-
                 <Button type="submit" size="lg" className="w-full group">
-                  Submit Application
+                  Get Your Free ROI Analysis
                   <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
 
-                <p className="text-slate-500 text-xs text-center">
-                  We respect your privacy. Your information is secure and will only be used to contact you about your inquiry.
+                <p className="text-[var(--text-muted)] text-xs text-center">
+                  Your information is secure and used only to contact you about your inquiry.
                 </p>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

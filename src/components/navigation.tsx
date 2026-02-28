@@ -1,12 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Menu, X, Phone, Mail } from "lucide-react"
-import { useState } from "react"
+import { Menu, X, Phone } from "lucide-react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   const navItems = [
     { name: "Solutions", href: "#services" },
@@ -19,22 +26,22 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50"
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? "bg-[var(--bg)]/90 backdrop-blur-xl border-b border-[var(--border)]"
+          : "bg-transparent"
+        }`}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-3">
-            <div className="relative w-12 h-12">
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl rotate-6 opacity-50 blur-sm" />
-              <div className="relative w-full h-full bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-black text-xl">T</span>
-              </div>
+          {/* Logo — Clean wordmark */}
+          <a href="/" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+              <span className="text-white font-display font-extrabold text-lg">T</span>
             </div>
-            <div>
-              <span className="text-xl font-bold text-white">TribeCode</span>
-              <span className="text-sky-400 font-bold text-xl">AI</span>
+            <div className="font-display font-bold text-lg tracking-tight">
+              <span className="text-[var(--text-primary)]">TribeCode</span>
+              <span className="text-[var(--accent)]">AI</span>
             </div>
           </a>
 
@@ -44,7 +51,7 @@ export function Navigation() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-slate-400 hover:text-sky-400 transition-colors font-medium text-sm"
+                className="smooth-underline text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-medium text-sm"
               >
                 {item.name}
               </a>
@@ -52,23 +59,27 @@ export function Navigation() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-5">
             <a
               href="tel:+18313458935"
-              className="flex items-center gap-2 text-slate-400 hover:text-sky-400 transition-colors"
+              className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
             >
               <Phone className="w-4 h-4" />
               <span className="text-sm font-medium">(831) 345-8935</span>
             </a>
-            <Button size="sm" onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}>
-              Get Qualified
+            <Button
+              size="sm"
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              Get Your Free Analysis
             </Button>
           </div>
 
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-slate-400 hover:text-white"
+            className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -80,33 +91,33 @@ export function Navigation() {
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="md:hidden bg-slate-900/95 backdrop-blur-xl border-b border-slate-800"
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-[var(--bg-elevated)] border-b border-[var(--border)]"
         >
-          <div className="px-6 py-4 space-y-4">
+          <div className="px-6 py-6 space-y-4">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block text-slate-400 hover:text-sky-400 transition-colors font-medium py-2"
+                className="block text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors font-medium py-2 text-lg"
               >
                 {item.name}
               </a>
             ))}
-            <div className="pt-4 border-t border-slate-800 space-y-3">
-              <a href="tel:+18313458935" className="flex items-center gap-2 text-slate-400">
+            <div className="pt-4 border-t border-[var(--border)] space-y-4">
+              <a href="tel:+18313458935" className="flex items-center gap-2 text-[var(--text-muted)]">
                 <Phone className="w-4 h-4" />
                 <span>(831) 345-8935</span>
               </a>
-              <a href="mailto:info@tribecodeai.com" className="flex items-center gap-2 text-slate-400">
-                <Mail className="w-4 h-4" />
-                <span>info@tribecodeai.com</span>
-              </a>
-              <Button className="w-full" onClick={() => {
-                setIsOpen(false)
-                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-              }}>
-                Get Qualified
+              <Button
+                className="w-full"
+                onClick={() => {
+                  setIsOpen(false)
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+                }}
+              >
+                Get Your Free Analysis
               </Button>
             </div>
           </div>
