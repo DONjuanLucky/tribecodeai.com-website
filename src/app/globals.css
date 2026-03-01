@@ -14,6 +14,13 @@
   --amber: #f7c948;
   --border: #262626;
   --border-hover: #3a3a3a;
+  /* Liquid glass tokens */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.16);
+  --glass-shine: rgba(255, 255, 255, 0.12);
+  --glass-blur: 20px;
 }
 
 @theme inline {
@@ -33,6 +40,18 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Respect reduced-motion (ui-ux-pro-max) ─── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ─── Display Typography ─── */
@@ -61,22 +80,368 @@ body {
   width: 100%;
 }
 
-/* ─── Card Hover Lift ─── */
-.card-hover {
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-hover);
-}
-
 /* ─── Gradient Line ─── */
 .gradient-line {
   background: linear-gradient(to bottom, var(--accent), var(--amber));
 }
 
-/* ─── Marquee Animation ─── */
+/* ─── Accent Gradient Text ─── */
+.text-accent-gradient {
+  background: linear-gradient(135deg, var(--accent), var(--amber));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =============================================
+   LIQUID GLASS SYSTEM
+   ============================================= */
+
+/* Base liquid glass card */
+.glass-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transition: background 0.4s ease,
+    border-color 0.4s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-6px);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Animated shine sweep on hover */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(105deg,
+      transparent 30%,
+      var(--glass-shine) 45%,
+      transparent 60%);
+  transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover::before {
+  left: 100%;
+}
+
+/* Iridescent bottom edge */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+      var(--accent),
+      var(--amber),
+      #a78bfa,
+      var(--accent));
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+  animation: iridescent-shift 3s ease infinite;
+}
+
+@keyframes iridescent-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* =============================================
+   AURORA GRADIENT BACKGROUND
+   ============================================= */
+
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.06;
+  animation: aurora-drift 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.aurora-bg::before {
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+}
+
+.aurora-bg::after {
+  bottom: -30%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--amber), transparent 70%);
+  animation-delay: -6s;
+  animation-duration: 16s;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(40px, -30px) scale(1.15);
+  }
+}
+
+/* =============================================
+   SHIMMER TEXT
+   ============================================= */
+
+.text-shimmer {
+  /* Solid color fallback — ensures text is ALWAYS visible */
+  color: var(--accent);
+  /* Shimmer gradient overlay via background-clip */
+  background: linear-gradient(110deg,
+      var(--accent) 0%,
+      var(--amber) 30%,
+      #fff8e1 50%,
+      var(--amber) 70%,
+      var(--accent) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-sweep 3.5s ease-in-out infinite;
+}
+
+/* Fallback: if background-clip not supported, show solid accent */
+@supports not (-webkit-background-clip: text) {
+  .text-shimmer {
+    -webkit-text-fill-color: var(--accent);
+    background: none;
+    color: var(--accent);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
+}
+
+/* =============================================
+   GRAIN OVERLAY (depth texture)
+   ============================================= */
+
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* =============================================
+   REVEAL ANIMATIONS
+   ============================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-stagger>* {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-stagger.visible>*:nth-child(1) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.05s;
+}
+
+.reveal-stagger.visible>*:nth-child(2) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.15s;
+}
+
+.reveal-stagger.visible>*:nth-child(3) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.25s;
+}
+
+.reveal-stagger.visible>*:nth-child(4) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.35s;
+}
+
+.reveal-stagger.visible>*:nth-child(5) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.45s;
+}
+
+.reveal-stagger.visible>*:nth-child(6) {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.55s;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* =============================================
+   BUTTON MICRO-INTERACTIONS
+   ============================================= */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(255, 107, 53, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 10px rgba(255, 107, 53, 0.2);
+}
+
+/* Subtle CTA pulse */
+@keyframes cta-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 107, 53, 0.12);
+  }
+}
+
+.btn-pulse {
+  animation: cta-pulse 3s ease-in-out infinite;
+}
+
+/* =============================================
+   TIMELINE + URGENCY
+   ============================================= */
+
+@keyframes dot-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 107, 53, 0);
+  }
+}
+
+.timeline-dot-active {
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes urgency-glow {
+
+  0%,
+  100% {
+    border-color: rgba(247, 201, 72, 0.3);
+  }
+
+  50% {
+    border-color: rgba(247, 201, 72, 0.7);
+  }
+}
+
+.urgency-border {
+  animation: urgency-glow 2.5s ease-in-out infinite;
+}
+
+/* =============================================
+   MARQUEE
+   ============================================= */
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -96,7 +461,10 @@ body {
   animation-play-state: paused;
 }
 
-/* ─── Custom Scrollbar ─── */
+/* =============================================
+   SCROLLBAR + SELECTION
+   ============================================= */
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -114,33 +482,7 @@ body {
   background: var(--text-muted);
 }
 
-/* ─── Selection ─── */
 ::selection {
   background: rgba(255, 107, 53, 0.25);
   color: var(--text-primary);
-}
-
-/* ─── Accent Gradient Text ─── */
-.text-accent-gradient {
-  background: linear-gradient(135deg, var(--accent), var(--amber));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Simple fade-in ─── */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in-up 0.5s ease forwards;
 }

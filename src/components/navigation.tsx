@@ -34,9 +34,13 @@ export function Navigation() {
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo — Clean wordmark */}
-          <a href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-[var(--accent)] flex items-center justify-center">
+          {/* Logo */}
+          <a
+            href="/"
+            className="flex items-center gap-2.5 group"
+            aria-label="TribeCode AI Home"
+          >
+            <div className="w-9 h-9 rounded-lg bg-[var(--accent)] flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
               <span className="text-white font-display font-extrabold text-lg">T</span>
             </div>
             <div className="font-display font-bold text-lg tracking-tight">
@@ -62,14 +66,19 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-5">
             <a
               href="tel:+18313458935"
-              className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+              className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors group"
+              aria-label="Call (831) 345-8935"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
               <span className="text-sm font-medium">(831) 345-8935</span>
             </a>
+            {/* btn-primary + btn-pulse on the primary nav CTA */}
             <Button
               size="sm"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="btn-primary btn-pulse"
+              onClick={() =>
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Get Your Free Analysis
             </Button>
@@ -78,8 +87,8 @@ export function Navigation() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-            aria-label="Toggle menu"
+            className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -92,6 +101,7 @@ export function Navigation() {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.25 }}
           className="md:hidden bg-[var(--bg-elevated)] border-b border-[var(--border)]"
         >
           <div className="px-6 py-6 space-y-4">
@@ -106,12 +116,15 @@ export function Navigation() {
               </a>
             ))}
             <div className="pt-4 border-t border-[var(--border)] space-y-4">
-              <a href="tel:+18313458935" className="flex items-center gap-2 text-[var(--text-muted)]">
+              <a
+                href="tel:+18313458935"
+                className="flex items-center gap-2 text-[var(--text-muted)]"
+              >
                 <Phone className="w-4 h-4" />
                 <span>(831) 345-8935</span>
               </a>
               <Button
-                className="w-full"
+                className="w-full btn-primary"
                 onClick={() => {
                   setIsOpen(false)
                   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
